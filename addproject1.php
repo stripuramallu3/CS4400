@@ -24,7 +24,7 @@
      <div class="container">
         <div id="content">
           <form class="form-signin" role="form" method="post" action="addproject2.php">
-            <h2 class="form-signin-heading">Add A Course</h2>
+            <h2 class="form-signin-heading">Add A Project</h2>
             <input type="text" name="projectName" id="projectName" class="form-control" placeholder="Project Name" required autofocus>
             <br \>
             <input type="text" name="advisor" id="advisor" class="form-control" placeholder="Advisor" required>
@@ -46,7 +46,7 @@
           </select>
           <br \>
           <select name="category1" class="form-control" id="category1">
-            <option selected disabled>Select A Category</option>
+            <option selected disabled required>Select A Category</option>
             <?php
               include("configuration.php");
               $query = "SELECT Name FROM category";
@@ -67,7 +67,7 @@
           <br \>
           <label>Major Requirement: </label>
           <select name="major" class="form-control" id="major">
-            <option selected value="">None</option>
+            <option selected value="None">None</option>
             <?php
                 include("configuration.php");
                 $query = "SELECT Major_Name FROM major";
@@ -80,7 +80,7 @@
           <br \>
           <label>Year Requirement: </label>
           <select name="year" class="form-control" id="year">
-            <option selected value="">None</option>
+            <option selected value="None">None</option>
             <option value="Freshmen">Freshmen</option>
             <option value="Sophomore">Sophomore</option>
             <option value="Junior">Junior</option>
@@ -89,7 +89,7 @@
           <br \>
           <label>Department Requirment: </label>
           <select name="department" class="form-control" id="department">
-            <option selected value="">None</option>
+            <option selected value="None">None</option>
             <?php
                 include("configuration.php");
                 $query = "SELECT Dept_Name FROM department";
