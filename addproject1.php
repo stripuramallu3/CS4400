@@ -23,15 +23,15 @@
     <div id="wrap">
      <div class="container">
         <div id="content">
-          <form class="form-signin" role="form" method="post" action="addcourse2.php">
+          <form class="form-signin" role="form" method="post" action="addproject2.php">
             <h2 class="form-signin-heading">Add A Course</h2>
-            <input type="text" name="courseNumber" id="courseNumber" class="form-control" placeholder="Course Number" required autofocus>
+            <input type="text" name="projectName" id="projectName" class="form-control" placeholder="Project Name" required autofocus>
             <br \>
-            <input type="text" name="courseName" id="courseName" class="form-control" placeholder="Course Name" required>
+            <input type="text" name="advisor" id="advisor" class="form-control" placeholder="Advisor" required>
             <br \>
-            <input type="text" name="instructorName" id="instructorName" class="form-control" placeholder="Instructor" required>
+            <input type="text" name="advisorEmail" id="advisorEmail" class="form-control" placeholder="Advisor Email" required>
             <br \>
-            <input type="text" name="estimated" id="estimated" class="form-control" placeholder="Estimated Number of Students" required>
+            <textarea type="text" name="description" id="description" class="form-control" placeholder="Project Description" required></textarea>
             <br \>
             <select name="designation" class="form-control" id="designation" required>
             <option selected disabled>Select A Designation</option>
@@ -61,6 +61,44 @@
           </select>
           <a style="cursor:pointer" id="addACategory" onClick="addCategory();checkCategory();">Add A Category</a>
           <br \>
+          <br \>
+          <input type="text" name="estimated" id="estimated" class="form-control" placeholder="Estimated Number of Students" required>
+          <br \>
+          <br \>
+          <label>Major Requirement: </label>
+          <select name="major" class="form-control" id="major">
+            <option selected value="">None</option>
+            <?php
+                include("configuration.php");
+                $query = "SELECT Major_Name FROM major";
+                $output = mysqli_query($db, $query) or die (mysqli_error($db));
+                while ($row = mysqli_fetch_row($output)) {
+                    echo '<option value="'.$row[0].'">'.$row[0].'</option>';
+                }
+            ?>
+          </select>
+          <br \>
+          <label>Year Requirement: </label>
+          <select name="year" class="form-control" id="year">
+            <option selected value="">None</option>
+            <option value="Freshmen">Freshmen</option>
+            <option value="Sophomore">Sophomore</option>
+            <option value="Junior">Junior</option>
+            <option value="Senior">Senior</option>
+          </select>
+          <br \>
+          <label>Department Requirment: </label>
+          <select name="department" class="form-control" id="department">
+            <option selected value="">None</option>
+            <?php
+                include("configuration.php");
+                $query = "SELECT Dept_Name FROM department";
+                $output = mysqli_query($db, $query) or die (mysqli_error($db));
+                while ($row = mysqli_fetch_row($output)) {
+                    echo '<option value="'.$row[0].'">'.$row[0].'</option>';
+                }
+            ?>
+          </select>
           <br \>
           <button class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
           </form>
