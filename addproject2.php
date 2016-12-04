@@ -27,7 +27,7 @@
     $projectName = setValue("projectName", $db);
     $advisor = setValue("advisor", $db);
     $advisorEmail = setValue("advisorEmail", $db);
-    $description = setValue("desctiption", $db);
+    $description = setValue("description", $db);
     $designation = setValue("designation", $db);
     $category1 = setValue("category1", $db);
     $category2 = setValue("category2", $db);

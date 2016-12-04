@@ -23,15 +23,15 @@
     <div id="wrap">
      <div class="container">
         <div id="content">
-          <form class="form-signin" role="form" method="post" action="addproject2.php">
+          <form class="form-signin" role="form" id="project" method="post" action="addproject2.php">
             <h2 class="form-signin-heading">Add A Project</h2>
             <input type="text" name="projectName" id="projectName" class="form-control" placeholder="Project Name" required autofocus>
             <br \>
             <input type="text" name="advisor" id="advisor" class="form-control" placeholder="Advisor" required>
             <br \>
-            <input type="text" name="advisorEmail" id="advisorEmail" class="form-control" placeholder="Advisor Email" required>
+            <input name="advisorEmail" id="advisorEmail" class="form-control" placeholder="Advisor Email" required>
             <br \>
-            <textarea type="text" name="description" id="description" class="form-control" placeholder="Project Description" required></textarea>
+            <textarea name="description" form="project" id="description" class="form-control" placeholder="Project Description" required></textarea>
             <br \>
             <select name="designation" class="form-control" id="designation" required>
             <option selected disabled>Select A Designation</option>
@@ -65,11 +65,16 @@
           <input type="text" name="estimated" id="estimated" class="form-control" placeholder="Estimated Number of Students" required>
           <br \>
           <br \>
-          <label>Major Requirement: </label>
+          <label>Major/Department Requirement: </label>
           <select name="major" class="form-control" id="major">
             <option selected value="None">None</option>
             <?php
                 include("configuration.php");
+                $query = "SELECT Dept_Name FROM department";
+                $output = mysqli_query($db, $query) or die (mysqli_error($db));
+                while ($row = mysqli_fetch_row($output)) {
+                    echo '<option value="'.$row[0].'">'.$row[0].'</option>';
+                }
                 $query = "SELECT Major_Name FROM major";
                 $output = mysqli_query($db, $query) or die (mysqli_error($db));
                 while ($row = mysqli_fetch_row($output)) {
@@ -87,18 +92,6 @@
             <option value="Senior">Senior</option>
           </select>
           <br \>
-          <label>Department Requirment: </label>
-          <select name="department" class="form-control" id="department">
-            <option selected value="None">None</option>
-            <?php
-                include("configuration.php");
-                $query = "SELECT Dept_Name FROM department";
-                $output = mysqli_query($db, $query) or die (mysqli_error($db));
-                while ($row = mysqli_fetch_row($output)) {
-                    echo '<option value="'.$row[0].'">'.$row[0].'</option>';
-                }
-            ?>
-          </select>
           <br \>
           <button class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
           </form>
