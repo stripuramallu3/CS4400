@@ -23,29 +23,29 @@
     <div id="wrap">
      <div class="container">
         <div id="content">
-          <form>
-          <h2>Popular Project</h2>
+          <form class="form-signin" role="form" method="post">
+          <h2>Application</h2>
           <table class="table table-striped table-bordered">
            <tr>
              <th>Project Name</th>
-             <th>Number of Applicants</th>
+             <th>Applicant Major</th>
+             <th>Applicant Year</th>
+             <th>Status</th>
+             <th></th>
+             <th></th>
            </tr>
           <?php
             include("configuration.php");
-            $numApplicants = "SELECT Pname, COUNT(*) AS count FROM apply GROUP BY Pname ORDER BY count LIMIT 10";
-            $output = mysqli_query($db, $numApplicants);
-            $projectName = array();
-            $numApplicants = array();
-            $count = 0;
+            $table = "SELECT Pname, major_n, Year, Status, GTemail FROM (apply INNER JOIN user ON apply.GTemail = user.GT_email)";
+            $output = mysqli_query($db, $table);
             if ($output) {
               while ($row = mysqli_fetch_row($output)) {
-                array_push($projectName, $row[0]);
-                array_push($numApplicants, $row[1]);
-                $count++;
+                if ($row[3] != "Pending") {
+                  echo "<td>". $row[0] . "</td><td>" . $row[1] . "</td><td>" . $row[2] . "</td><td>". $row[3] . "</td><td> </td> <td> </td></tr>";
+                } else {
+                  echo "<td>". $row[0] . "</td><td>" . $row[1] . "</td><td>" . $row[2] . "</td><td>". $row[3] . "</td><td> <a href='http://localhost/CS4400/viewapplication2.php?gtemail=" . $row[4] . "&name=" . $row[0] ."'> Accept </a></td> <td> <a href='http://localhost/CS4400/viewapplication3.php?gtemail=" . $row[4] ."&name=" .$row[0] ."''>Reject</a></td></tr>";
+                }
               }
-            }
-            for ($i = 0; $i < $count; $i++) {
-              echo "<tr><td>". $projectName[$i] . "</td><td>" . $numApplicants[$i] . "</tr>";
             }
           ?>
           </table>
@@ -57,11 +57,6 @@
           <a href="http://localhost/CS4400/adminpage.php"><button class="btn btn-lg btn-primary btn-block" type="submit">Back</button></a>
         </div>
     </div>
-    </div>
-    <div id="footer">
-      <div class="container">
-        <p class="muted credit">Created By Daniel Loo, Pranav Marathe, Sreeramamurthy Tripuramallu  FALL 2016</p>
-      </div>
     </div>
   </body>
 </html>

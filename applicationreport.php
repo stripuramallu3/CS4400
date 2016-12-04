@@ -63,41 +63,49 @@
             $output = mysqli_query($db, $projectNames);
             $projectNames = array();
             $count = 0;
-            while ($row = mysqli_fetch_row($output)) {
-              array_push($projectNames, $row[0]);
-              $count = $count + 1;
+            if ($output) {
+              while ($row = mysqli_fetch_row($output)) {
+                array_push($projectNames, $row[0]);
+                $count = $count + 1;
+              }
             }
             $numApplicants = "SELECT Pname, COUNT(*) FROM apply GROUP BY Pname ORDER BY Pname";
             $output = mysqli_query($db, $numApplicants);
             $numApplicants = array();
-            while ($row = mysqli_fetch_row($output)) {
-              $numApplicants[$row[0]] = $row[1];
+            if ($output) {
+              while ($row = mysqli_fetch_row($output)) {
+                $numApplicants[$row[0]] = $row[1];
+              }
             }
             $accepted = "SELECT Pname, Count(*) FROM apply WHERE Status = 'Accepted' GROUP BY Pname ORDER BY Pname";
             $output = mysqli_query($db, $accepted);
             $accepted = array();
-            while ($row = mysqli_fetch_row($output)) {
-              $accepted[$row[0]] = $row[1];
+            if ($output) {
+              while ($row = mysqli_fetch_row($output)) {
+                $accepted[$row[0]] = $row[1];
+              }
             }
             $topMajor = "SELECT * FROM (SELECT Pname ,COUNT(*) AS 'numMajors', major_n FROM (SELECT major_n, Pname FROM User INNER JOIN apply ON user.GT_email = apply.GTemail) AS table1 GROUP BY major_n ORDER BY 'Pname, numMajors') AS table2";
             $output = mysqli_query($db, $topMajor);
             $topMajor = array();
             $numCount = 0;
             $tempPname = "";
-            while ($row = mysqli_fetch_row($output)) {
-              if ($numCount == 0) {
-                $tempPname = $row[0];
-                $topMajor[$row[0]] = $row[2];
-                $numCount++;
-              } else if ($numCount < 3 && $row[0] == $tempPname) {
-                  $topMajor[$row[0]] =  $row[2] . ", " . $topMajor[$row[0]];
-                  $numCount++;
-              } else if ($row[0] == $Pname) {
-                  $numCount++;
-              } else {
-                  $numCount = 1;
-                  $topMajor[$row[0]] = $row[2];
+            if ($output) {
+              while ($row = mysqli_fetch_row($output)) {
+                if ($numCount == 0) {
                   $tempPname = $row[0];
+                  $topMajor[$row[0]] = $row[2];
+                  $numCount++;
+                } else if ($numCount < 3 && $row[0] == $tempPname) {
+                    $topMajor[$row[0]] =  $row[2] . ", " . $topMajor[$row[0]];
+                    $numCount++;
+                } else if ($row[0] == $Pname) {
+                    $numCount++;
+                } else {
+                    $numCount = 1;
+                    $topMajor[$row[0]] = $row[2];
+                    $tempPname = $row[0];
+                }
               }
             }
             for ($i = 0; $i < $count; $i++) {

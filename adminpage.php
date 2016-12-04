@@ -27,7 +27,7 @@
           <br \>
           <br \>
           <form class="form-signin" role="form" method="post">
-            <a href="http://localhost/CS4400/viewapplications.php" style="cursor:pointer" align:"center">View Applications</a>
+            <a href="http://localhost/CS4400/viewapplications1.php" style="cursor:pointer" align:"center">View Applications</a>
             <br \>
             <a href="http://localhost/CS4400/popularprojectreport.php" style="cursor:pointer" align:"center">View Popular Project Report</a>
             <br \>

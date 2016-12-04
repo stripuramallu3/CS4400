@@ -36,8 +36,10 @@
             $username = mysqli_real_escape_string($db, $_SESSION['username']);
             $query = "SELECT Date, Pname, Status FROM Apply WHERE GTemail = (SELECT GT_email FROM user WHERE Username = '$username') ORDER BY Date";
             $output = mysqli_query($db, $query);
-            while ($row = mysqli_fetch_row($output)) {
-              echo "<tr><td>". $row[0] . "</td><td>" . $row[1] . "</td><td>" . $row[2] . "</tr>";
+            if ($output) {
+              while ($row = mysqli_fetch_row($output)) {
+                echo "<tr><td>". $row[0] . "</td><td>" . $row[1] . "</td><td>" . $row[2] . "</tr>";
+              }
             }
           ?>
           </table>

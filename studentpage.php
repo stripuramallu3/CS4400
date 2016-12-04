@@ -79,9 +79,9 @@
           <br />
           <br />
 
-          <input type="checkbox" name="project" id="projectRadio">Project</input>
+          <input type="checkbox" name="project" id="project">Project</input>
           <br \>
-          <input type="checkbox" name="course" id="courseRadio">Course</input>
+          <input type="checkbox" name="course" id="course">Course</input>
           <br />
           <br />
           <button style="margin-bottom:10px" class="btn btn-lg btn-primary btn-block" type="submit">Apply Filter</button>
