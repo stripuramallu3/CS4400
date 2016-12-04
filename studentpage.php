@@ -78,9 +78,10 @@
           </select>
           <br />
           <br />
-          <label><input type="radio" name="type" id="radio">Project</input></label>
-          <label><input type="radio" name="type" id="radio">Course</input></label>
-          <label><input type="radio" name="type" id="radio">Both</input></label>
+
+          <input type="checkbox" name="project" id="projectRadio">Project</input>
+          <br \>
+          <input type="checkbox" name="course" id="courseRadio">Course</input>
           <br />
           <br />
           <button style="margin-bottom:10px" class="btn btn-lg btn-primary btn-block" type="submit">Apply Filter</button>
