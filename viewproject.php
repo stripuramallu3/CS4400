@@ -75,6 +75,7 @@
             }
           }
         ?>
+        <a href="http://localhost/CS4400/checkApply.php">Apply Now</a>
       </form>
       <br />
       <br />
