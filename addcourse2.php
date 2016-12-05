@@ -45,7 +45,7 @@
     $tempcategory7 = set("category7", $db);
     $tempcategory8 = set("category8", $db);
     $tempcategory9 = set("category9", $db);
-    $query = "INSERT INTO Course (CRN, Name, Instructor, numStudents, dName) VALUES ('$courseNumber', '$courseName', '$instructor', '$estimated', '$designation')";
+    $query = "INSERT INTO course (CRN, Name, Instructor, numStudents, dName) VALUES ('$courseNumber', '$courseName', '$instructor', '$estimated', '$designation')";
     $output = mysqli_query($db, $query);
     $array = array($category1, $category2, $category3, $category4, $category5, $category6, $category7, $category8, $category9);
     $array2 = array($tempcategory1, $tempcategory2, $tempcategory3, $tempcategory4, $tempcategory5, $tempcategory6, $tempcategory7, $tempcategory8, $tempcategory9);

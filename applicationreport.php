@@ -143,10 +143,5 @@
         </div>
     </div>
     </div>
-    <div id="footer">
-      <div class="container">
-        <p class="muted credit">Created By Daniel Loo, Pranav Marathe, Sreeramamurthy Tripuramallu  FALL 2016</p>
-      </div>
-    </div>
   </body>
 </html>

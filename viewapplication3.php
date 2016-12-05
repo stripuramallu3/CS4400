@@ -22,5 +22,5 @@
     $name = mysqli_real_escape_string($db, $name);
     $query = "UPDATE apply SET Status = 'Rejected' WHERE GTemail = '$email' AND Pname = '$name'";
     $output = mysqli_query($db, $query);
-    header("location:http://localhost/CS4400/viewapplication1.php");
+    header("location:http://localhost/CS4400/viewapplications1.php");
 ?>

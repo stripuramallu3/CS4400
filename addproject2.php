@@ -65,17 +65,7 @@
             $output = mysqli_query($db, $query);
         }
     }
-    if ($tempmajor != "") {
-        $query = "INSERT INTO requirements (Pname, Requirement) VALUES ('$projectName','$major')";
-        $output = mysqli_query($db, $query);
-    }
-    if ($tempyear != "") {
-        $query = "INSERT INTO requirements (Pname, Requirement) VALUES ('$projectName','$year')";
-        $output = mysqli_query($db, $query);
-    }
-    if ($tempdepartment != "") {
-        $query = "INSERT INTO requirements (Pname, Requirement) VALUES ('$projectName','$department')";
-        $output = mysqli_query($db, $query);
-    }
+    $query = "INSERT INTO requirements (Pname, Major, Department, Year) VALUES ('$projectName','$major', '$department', '$year')";
+    $output = mysqli_query($db, $query);
     header("location:http://localhost/CS4400/addproject1.php");
 ?>

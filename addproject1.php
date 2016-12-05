@@ -65,17 +65,25 @@
           <input type="text" name="estimated" id="estimated" class="form-control" placeholder="Estimated Number of Students" required>
           <br \>
           <br \>
-          <label>Major/Department Requirement: </label>
+          <label>Major Requirement: </label>
           <select name="major" class="form-control" id="major">
-            <option selected value="None">None</option>
+            <option selected value=""></option>
             <?php
                 include("configuration.php");
-                $query = "SELECT Dept_Name FROM department";
+                $query = "SELECT Major_Name FROM major";
                 $output = mysqli_query($db, $query) or die (mysqli_error($db));
                 while ($row = mysqli_fetch_row($output)) {
                     echo '<option value="'.$row[0].'">'.$row[0].'</option>';
                 }
-                $query = "SELECT Major_Name FROM major";
+            ?>
+          </select>
+          <br />
+          <label>Department Requirement: </label>
+          <select  name="department" class="form-control" id="department">
+          <option selected value=""></option>
+            <?php
+                include("configuration.php");
+                $query = "SELECT Dept_Name FROM department";
                 $output = mysqli_query($db, $query) or die (mysqli_error($db));
                 while ($row = mysqli_fetch_row($output)) {
                     echo '<option value="'.$row[0].'">'.$row[0].'</option>';
@@ -85,7 +93,7 @@
           <br \>
           <label>Year Requirement: </label>
           <select name="year" class="form-control" id="year">
-            <option selected value="None">None</option>
+            <option selected value=""></option>
             <option value="Freshmen">Freshmen</option>
             <option value="Sophomore">Sophomore</option>
             <option value="Junior">Junior</option>

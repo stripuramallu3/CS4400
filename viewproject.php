@@ -65,16 +65,21 @@
           if ($output3) {
             $num = 1;
             while ($row3 = mysqli_fetch_row($output3)) {
-              echo "<label>Requirement ". $num . ":</label><p> " . $row3[0] . "</p>";
-              $num++;
-              if (is_null($row3[1]) || $row3[1] == '') {
-                echo "<label>Requirement ". $num . ":</label><p> " . $row3[2] . "</p>";
-              } else {
-                echo "<label>Requirement ". $num . ":</label><p> " . $row3[1] . "</p>";
+              if (!is_null($row3[0]) || $row3[0] != "") {
+                echo "<label>Requirement ". $num . ":</label><p> " . $row3[0] . "</p>";
+                $num++;
               }
-              $num++;
+              if (!is_null($row3[1]) || $row3[1] != '') {
+                echo "<label>Requirement ". $num . ":</label><p> " . $row3[2] . "</p>";
+                $num++;
+              }
+              if (!is_null($row3[2]) || $row3[2] != '') {
+                echo "<label>Requirement ". $num . ":</label><p> " . $row3[1] . "</p>";
+                $num++;
+              }
             }
           }
+          echo "<br />";
           echo "<a href='http://localhost/CS4400/checkApply.php?name=". $tempName . "'>Apply Now</a>";
         ?>
       </form>
