@@ -33,26 +33,47 @@
             $name = "";
           }
           $name = mysqli_real_escape_string($db, $name);
-          $query = "SELECT Name, Instructor, dName, numStudents, CRN FROM course WHERE Name='$name'";
-          $query2 = "SELECT Cname FROM coursecategory WHERE CourseName='$name'";
+          $query = "SELECT * FROM project WHERE Pname='$name'";
+          $query2 = "SELECT Cname FROM projectcategory WHERE Pname='$name'";
+          $query3 = "SELECT Year, Department, Major FROM requirements WHERE Pname='$name'";
           $output = mysqli_query($db, $query);
           $output2 = mysqli_query($db, $query2);
+          $output3 = mysqli_query($db, $query3);
+          echo "<h2>" . $name . "</h2>";
           if ($output) {
-            $row = mysqli_fetch_row($output);
-            echo "<h2>" . $row[4] ."</h2>";
-            echo "<label>Course Name: " . $row[0] . "</label> <br />";
-            echo "<label>Instructor: " . $row[1]  ."</label> <br />";
-            echo "<label>Designation: " . $row[2] . "</label> <br />";
-            echo "<label>Estimated Number of Students: " . $row[3] . "</label> <br />";
+            $row1 = mysqli_fetch_row($output);
+            $advisor = $row1[3];
+            $advisoremail = $row1[4];
+            $string = $advisor . " (" . $advisoremail . ")";
+            echo "<label>Advisor: </label><p>". $string . "</p><br />";
+            $description = $row1[2];
+            echo "<label>Description: </label><br /><p>". $description . "</p><br />";
+            $designation = $row1[5];
+            echo "<label>Designation: </label><p>". $designation . "</p><br />";
+            $numStudents = $row1[0];
+            echo "<label>Estimated Number of Students: </label><br /><p>". $numStudents . "</p><br />";
           }
           if ($output2) {
             $num = 1;
-            while ($row = mysqli_fetch_row($output2)) {
-              echo "<label>Category ". $num . ": " . $row[0] . "</label>";
+            while ($row2 = mysqli_fetch_row($output2)) {
+              echo "<label>Category ". $num . ": </label><p>" . $row2[0] . "</p>";
               $num++;
             }
           }
-
+          echo "<br /> <br />";
+          if ($output3) {
+            $num = 1;
+            while ($row3 = mysqli_fetch_row($output3)) {
+              echo "<label>Requirement ". $num . ":</label><p> " . $row3[0] . "</p>";
+              $num++;
+              if (is_null($row3[1]) || $row3[1] == '') {
+                echo "<label>Requirement ". $num . ":</label><p> " . $row3[2] . "</p>";
+              } else {
+                echo "<label>Requirement ". $num . ":</label><p> " . $row3[1] . "</p>";
+              }
+              $num++;
+            }
+          }
         ?>
       </form>
       <br />

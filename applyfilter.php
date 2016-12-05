@@ -69,7 +69,7 @@
           $tempProject = set("project");
           $course = setValue("course", $db);
           $tempCourse = set("project");
-          $query =  "SELECT * FROM (project NATURAL JOIN requirements NATURAL JOIN projectcategory) WHERE Pname LIKE '%" . "$title" . "%' ";
+          $query =  "SELECT DISTINCT Pname FROM (project NATURAL JOIN requirements NATURAL JOIN projectcategory) WHERE Pname LIKE '%" . "$title" . "%' ";
           if ($tempcategory1 != "") {
             $query = $query . "AND (Cname = '$category1' ";
           }
@@ -110,7 +110,7 @@
             $query = $query . "AND Year = '$year' ";
           }
           $output1 = mysqli_query($db, $query);
-          $query2 = "SELECT * FROM (course INNER JOIN coursecategory ON course.Name = coursecategory.CourseName) WHERE Name LIKE '%" . "$title" . "%' OR CRN LIKE '%" . "$title" . "%' ";
+          $query2 = "SELECT DISTINCT Name FROM (course INNER JOIN coursecategory ON course.Name = coursecategory.CourseName) WHERE Name LIKE '%" . "$title" . "%' OR CRN LIKE '%" . "$title" . "%' ";
           if ($tempcategory1 != "") {
             $query2 = $query2 . "AND (Cname = '$category1' ";
           }
@@ -162,13 +162,12 @@
           if ($course) {
             if ($output2) {
               while ($row = mysqli_fetch_row($output2)) {
-                $temp = $row[1];
+                $temp = $row[0];
                 $temp = str_replace(' ', '%20', $temp);
-                echo "<tr><td>" . "<a href=http://localhost/CS4400/viewcourse.php?name=" . $temp . "/>" . $row[1] ."</td><td>Course</td></tr>";
+                echo "<tr><td>" . "<a href=http://localhost/CS4400/viewcourse.php?name=" . $temp . "/>" . $row[0] ."</td><td>Course</td></tr>";
               }
             }
           }
-
         ?>
       </form>
       <a href="http://localhost/CS4400/studentpage.php"> <button style="margin-bottom:10px" class="btn btn-lg btn-primary btn-block" type="submit">Back</button></a>
