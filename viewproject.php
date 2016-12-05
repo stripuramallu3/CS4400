@@ -32,6 +32,7 @@
           } else {
             $name = "";
           }
+          $tempName = $name;
           $name = mysqli_real_escape_string($db, $name);
           $query = "SELECT * FROM project WHERE Pname='$name'";
           $query2 = "SELECT Cname FROM projectcategory WHERE Pname='$name'";
@@ -74,8 +75,8 @@
               $num++;
             }
           }
+          echo "<a href='http://localhost/CS4400/checkApply.php?name=". $tempName . "'>Apply Now</a>";
         ?>
-        <a href="http://localhost/CS4400/checkApply.php">Apply Now</a>
       </form>
       <br />
       <br />

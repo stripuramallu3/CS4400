@@ -34,7 +34,7 @@
           <?php
             include("configuration.php");
             $username = mysqli_real_escape_string($db, $_SESSION['username']);
-            $query = "SELECT Date, Pname, Status FROM Apply WHERE GTemail = (SELECT GT_email FROM user WHERE Username = '$username') ORDER BY Date";
+            $query = "SELECT Date, Pname, Status FROM apply WHERE GTemail = (SELECT GT_email FROM user WHERE Username = '$username') ORDER BY Date";
             $output = mysqli_query($db, $query);
             if ($output) {
               while ($row = mysqli_fetch_row($output)) {
