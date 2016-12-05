@@ -33,7 +33,9 @@
                 </html>
             ');
         }
-    } else if (!$output) {
+    }
+    if ($output) {
+        $tempname = $name;
         $name = mysqli_real_escape_string($db, $name);
         $username = mysqli_real_escape_string($db, $_SESSION['username']);
         $query1 = "SELECT major_n, Year, GT_email FROM user WHERE Username='$username' ";
@@ -45,11 +47,13 @@
         $yearProj = "";
         $deptProj = "";
         $dept = "";
+        $tempemail = "";
         if ($output1) {
             $row = mysqli_fetch_row($output1);
             $majortemp = $row[0];
             $yeartemp = $row[1];
             $email = $row[2];
+            $tempemail = $row[2];
             $email = mysqli_real_escape_string($db, $email);
             $major = mysqli_real_escape_string($db, $row[0]);
             $year = mysqli_real_escape_string($db, $row[1]);
@@ -67,8 +71,18 @@
             $deptProj = $row[2];
 
         }
+        $in = false;
+        $query = "SELECT Pname, GTemail FROM apply";
+        $output = mysqli_query($db, $query);
+        if ($output) {
+            while ($row = mysqli_fetch_row($output)) {
+                if ($row[0] == $tempname and $row[1] == $tempemail) {
+                    $in = true;
+                }
+            }
+        }
 
-        if (($majorProj == $majortemp OR $majorProj == "") AND ($yearProj == $yeartemp OR $yearProj == "") AND ($deptProj == $dept OR $deptProj == "")) {
+        if ((!$in) AND ($majorProj == $majortemp OR $majorProj == "") AND ($yearProj == $yeartemp OR $yearProj == "") AND ($deptProj == $dept OR $deptProj == "")) {
             $today = date("Y-m-d");
             $today = mysqli_real_escape_string($db, $today);
             $query = "INSERT INTO apply (Date, Status, GTemail, Pname) VALUES ('$today', 'Pending', '$email', '$name')";
@@ -90,7 +104,7 @@
                     <meta http-equiv="refresh" content="5;url=http://localhost/CS4400/studentpage.php"
                 </head>
                 <body>
-                    You are Not Qualified for this Project. Refresh in 5 Seconds.
+                    You are Not Qualified for this Project Or Have Already Applied to this Project. Refresh in 5 Seconds.
                 </body>
                 </html>
             ');
