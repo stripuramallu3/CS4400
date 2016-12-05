@@ -85,7 +85,7 @@
                 $accepted[$row[0]] = $row[1];
               }
             }
-            $topMajor = "SELECT * FROM (SELECT Pname ,COUNT(*) AS 'numMajors', major_n FROM (SELECT major_n, Pname FROM User INNER JOIN apply ON user.GT_email = apply.GTemail) AS table1 GROUP BY major_n ORDER BY 'Pname, numMajors') AS table2";
+            $topMajor = "SELECT * FROM (SELECT Pname ,COUNT(*) AS 'numMajors', major_n FROM (SELECT major_n, Pname FROM user INNER JOIN apply ON user.GT_email = apply.GTemail) AS table1 GROUP BY major_n ORDER BY Pname, 'numMajors') AS table2";
             $output = mysqli_query($db, $topMajor);
             $topMajor = array();
             $numCount = 0;
@@ -97,9 +97,9 @@
                   $topMajor[$row[0]] = $row[2];
                   $numCount++;
                 } else if ($numCount < 3 && $row[0] == $tempPname) {
-                    $topMajor[$row[0]] =  $row[2] . ", " . $topMajor[$row[0]];
+                    $topMajor[$row[0]] =  $topMajor[$row[0]] . ", " . $row[2];
                     $numCount++;
-                } else if ($row[0] == $Pname) {
+                } else if ($row[0] == $tempPname) {
                     $numCount++;
                 } else {
                     $numCount = 1;
