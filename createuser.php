@@ -46,87 +46,79 @@ if (isset($_POST['gtEmail'])) {
     ');
 }
 
-if (isset($_POST['userType'])) {
-    $userType=$_POST['userType'];
-} else {
-    echo('
-        <html>
-        <head>
-            <meta http-equiv="refresh" content="2;url=http://localhost/CS4400/createuser.html"
-        </head>
-        <body>
-            Invalid User Type. Please Try Again. Refresh In 2 Second.
-        </body>
-        </html>
-    ');
-}
-
-
-$tempUserType = $userType;
 $tempUsername = $username;
 $tempPassword = $password;
 
-$username = mysqli_real_escape_string($db, $username);
-$password = mysqli_real_escape_string($db, $password);
-$gtEmail = mysqli_real_escape_string($db, $gtEmail);
-$userType = mysqli_real_escape_string($db, $userType);
+$gtEmailLast = substr($gtEmail, -11);
+if ($gtEmailLast != '@gatech.edu') {
+    echo('
+            <html>
+            <head>
+                <meta http-equiv="refresh" content="5;url=http://localhost/CS4400/createuser.html"
+            </head>
+            <body>
+                Please Enter a Valid Email.Refresh in 5 Seconds.
+            </body>
+            </html>
+    ');
+} else {
+    $username = mysqli_real_escape_string($db, $username);
+    $password = mysqli_real_escape_string($db, $password);
+    $gtEmail = mysqli_real_escape_string($db, $gtEmail);
 
 
-$query = "SELECT * FROM user";
-$output = mysqli_query($db, $query) or die (mysqli_error($db));
-$numRowsOriginal = mysqli_num_rows($output);
+    $query = "SELECT * FROM user";
+    $output = mysqli_query($db, $query) or die (mysqli_error($db));
+    $numRowsOriginal = mysqli_num_rows($output);
 
-$query = "SELECT * FROM user WHERE username = '$username' OR email = 'gtEmail'";
-$output = mysqli_query($db, $query);
+    $query = "SELECT * FROM user WHERE username = '$username' OR email = 'gtEmail'";
+    $output = mysqli_query($db, $query);
 
-if ($output == false) {
-    $query = "INSERT INTO user (Username, major_n, GT_email, Password, Year, UserType) VALUES ('$username', 'NULL', '$gtEmail', '$password', 'NULL', 'Student')";
-    $output = mysqli_query($db, $query) or die ('
+    if ($output == false) {
+        $query = "INSERT INTO user (Username, major_n, GT_email, Password, Year, UserType) VALUES ('$username', '', '$gtEmail', '$password', '', 'Student')";
+        $output = mysqli_query($db, $query) or die ('
+                <html>
+                <head>
+                    <meta http-equiv="refresh" content="2;url=http://localhost/CS4400/createuser.html"
+                </head>
+                <body>
+                    Username or GT Email Already Exists. Please Try Again.
+                </body>
+                </html>
+            ');
+
+        $query = "SELECT * FROM user";
+        $output = mysqli_query($db, $query) or die (mysqli_error($db));
+        $numRowsNew = mysqli_num_rows($output);
+
+        if (($numRowsNew - $numRowsOriginal) == 1) {
+            session_start();
+            $_SESSION['username'] = $tempUsername;
+            $_SESSION['password'] = $tempPassword;
+            $_SESSION['userType'] = 'Student';
+            echo('
+                <html>
+                <head>
+                    <meta http-equiv="refresh" content="0;url=http://localhost/CS4400/studentpage.php"
+                </head>
+                <body>
+                </body>
+                </html>
+            ');
+        }
+    } else {
+        echo('
             <html>
             <head>
                 <meta http-equiv="refresh" content="2;url=http://localhost/CS4400/createuser.html"
             </head>
             <body>
-                Username or GT Email Already Exists. Please Try Again.
+                Username or GTEmail Already Exists.
             </body>
             </html>
         ');
 
-    $query = "SELECT * FROM user";
-    $output = mysqli_query($db, $query) or die (mysqli_error($db));
-    $numRowsNew = mysqli_num_rows($output);
-
-
-    if (($numRowsNew - $numRowsOriginal) == 1) {
-        session_start();
-        $_SESSION['username'] = $tempUsername;
-        $_SESSION['password'] = $tempPassword;
-        $_SESSION['userType'] = $tempUserType;
-        echo('
-            <html>
-            <head>
-                <meta http-equiv="refresh" content="2;url=http://localhost/CS4400/studentpage.html"
-            </head>
-            <body>
-                Refresh
-            </body>
-            </html>
-        ');
     }
-} else {
-    echo('
-        <html>
-        <head>
-            <meta http-equiv="refresh" content="2;url=http://localhost/CS4400/createuser.html"
-        </head>
-        <body>
-            Username or GTEmail Already Exists.
-        </body>
-        </html>
-    ');
-
 }
-
-
 
 ?>
